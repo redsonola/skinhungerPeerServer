@@ -4,7 +4,7 @@
 const express = require('express')
 const app = express()
 const port = 9000
-var server = app.listen(.listen(process.env.PORT || 9000), () => {
+var server = app.listen(process.env.PORT || 9000, () => {
     console.log(`Example app listening at http://localhost:${port}`)
   })
 var ExpressPeerServer = require("peer").ExpressPeerServer(server); 

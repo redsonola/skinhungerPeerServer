@@ -61,3 +61,13 @@ app.get("/find", function(httpRequest, httpResponse, next)
     //     httpResponse.status(404).send("Not found");
     // }
 });
+
+app.use(function (req, res, next) {
+
+    res.setHeader('Access-Control-Allow-Origin', '*'); //note: will need to change this to deployed site
+    res.setHeader('Access-Control-Allow-Methods', 'GET');
+    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
+    res.setHeader('Access-Control-Allow-Credentials', true);
+
+    next();
+});

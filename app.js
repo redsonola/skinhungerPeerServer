@@ -3,6 +3,10 @@
 
 const express = require('express')
 const app = express()
+var cors = require('cors')
+
+app.use(cors());
+
 const port = 9000
 var server = app.listen(process.env.PORT || 9000, () => {
     console.log(`Example app listening at http://localhost:${port}`)
@@ -17,6 +21,11 @@ ExpressPeerServer.on("connection", function(id){ var idx = connected_users.index
         connected_users.push(id);
     }
 });
+
+
+app.get('/products/:id', function (req, res, next) {
+  res.json({msg: 'This is CORS-enabled for all origins!'})
+})
 
 ExpressPeerServer.on("disconnect", function(id){ var idx = connected_users.indexOf(id);
     if(idx !== -1)
@@ -62,12 +71,4 @@ app.get("/find", function(httpRequest, httpResponse, next)
     // }
 });
 
-app.use(function (req, res, next) {
 
-    res.setHeader('Access-Control-Allow-Origin', '*'); //note: will need to change this to deployed site
-    res.setHeader('Access-Control-Allow-Methods', 'GET');
-    res.setHeader('Access-Control-Allow-Headers', 'X-Requested-With,content-type');
-    res.setHeader('Access-Control-Allow-Credentials', true);
-
-    next();
-});

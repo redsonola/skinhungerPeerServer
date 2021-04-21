@@ -15,11 +15,13 @@ var ExpressPeerServer = require("peer").ExpressPeerServer(server);
 app.use("/signaling", ExpressPeerServer);
 var connected_users = [];
 var random_pool = []; 
-ExpressPeerServer.on("connection", function(id){ var idx = connected_users.indexOf(id);
+ExpressPeerServer.on("connection", function(id){ 
+    var idx = connected_users.indexOf(id);
     if(idx === -1) //only add id if it's not in the array yet
     {
         connected_users.push(id);
     }
+
 });
 
 
@@ -28,18 +30,23 @@ app.get('/products/:id', function (req, res, next) {
 })
 
 ExpressPeerServer.on("disconnect", function(id){ 
-    var idx = connected_users.indexOf(id);
-    if(idx !== -1)
+    let id1 = connected_users.indexOf(id);
+    if(id1 !== -1)
     {
-        connected_users.splice(idx, 1);
+        connected_users.splice(id1, 1);
     }
 
-    idx = waiting_peers.indexOf(id); 
-    if(idx !== -1)
+    console.log("before");
+    console.log(waiting_peers);
+
+    let id2 = waiting_peers.indexOf(id); 
+    if(id2 !== -1)
     {
-        waiting_peers.splice(idx, 1);
-    }
-    console.log("Disconnected from peer server: " + idx);
+        waiting_peers.splice(id2, 1);
+    } 
+    console.log("after");
+    console.log(waiting_peers);
+    console.log("Disconnected from peer server: "+ id + "," + id1 + "," + id2);
 });
 
 //getting a random chat partner

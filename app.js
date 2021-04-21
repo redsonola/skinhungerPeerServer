@@ -36,18 +36,12 @@ ExpressPeerServer.on("disconnect", function(id){ //that value was a misnomer. it
     {
         connected_users.splice(id1, 1);
     }
-
-    console.log("before");
-    console.log(waiting_peers);
-
+    
     let id2 = waiting_peers.indexOf(id.id); 
     if(id2 !== -1)
     {
         waiting_peers.splice(id2, 1);
     } 
-    console.log("after");
-    console.log(waiting_peers);
-    console.log("Disconnected from peer server: "+ id.id + "," + id1 + "," + id2);
 });
 
 //getting a random chat partner

@@ -16,10 +16,10 @@ app.use("/signaling", ExpressPeerServer);
 var connected_users = [];
 var random_pool = []; 
 ExpressPeerServer.on("connection", function(id){ 
-    var idx = connected_users.indexOf(id);
+    var idx = connected_users.indexOf(id.id);
     if(idx === -1) //only add id if it's not in the array yet
     {
-        connected_users.push(id);
+        connected_users.push(id.id);
     }
 
 });
@@ -29,9 +29,9 @@ app.get('/products/:id', function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for all origins!'})
 })
 
-ExpressPeerServer.on("disconnect", function(id){
+ExpressPeerServer.on("disconnect", function(id){ //that value was a misnomer. it is NOT the id, its this whole peer obj.
 
-    let id1 = connected_users.indexOf(id);
+    let id1 = connected_users.indexOf(id.id);
     if(id1 !== -1)
     {
         connected_users.splice(id1, 1);
@@ -40,14 +40,14 @@ ExpressPeerServer.on("disconnect", function(id){
     console.log("before");
     console.log(waiting_peers);
 
-    let id2 = waiting_peers.indexOf(id); 
+    let id2 = waiting_peers.indexOf(id.id); 
     if(id2 !== -1)
     {
         waiting_peers.splice(id2, 1);
     } 
     console.log("after");
     console.log(waiting_peers);
-    console.log("Disconnected from peer server: "+ JSON.stringify(id) + "," + id1 + "," + id2);
+    console.log("Disconnected from peer server: "+ id.id + "," + id1 + "," + id2);
 });
 
 //getting a random chat partner

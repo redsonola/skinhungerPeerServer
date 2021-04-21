@@ -29,7 +29,8 @@ app.get('/products/:id', function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for all origins!'})
 })
 
-ExpressPeerServer.on("disconnect", function(id){ 
+ExpressPeerServer.on("disconnect", function(id){
+
     let id1 = connected_users.indexOf(id);
     if(id1 !== -1)
     {
@@ -46,7 +47,7 @@ ExpressPeerServer.on("disconnect", function(id){
     } 
     console.log("after");
     console.log(waiting_peers);
-    console.log("Disconnected from peer server: "+ id + "," + id1 + "," + id2);
+    console.log("Disconnected from peer server: "+ JSON.stringify(id) + "," + id1 + "," + id2);
 });
 
 //getting a random chat partner

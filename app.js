@@ -5,7 +5,7 @@ const express = require('express')
 const app = express()
 var cors = require('cors')
 
-app.use(cors());
+app.use( cors() );
 
 const port = 9000
 var server = app.listen(process.env.PORT || 9000, () => {
@@ -27,16 +27,19 @@ app.get('/products/:id', function (req, res, next) {
   res.json({msg: 'This is CORS-enabled for all origins!'})
 })
 
-ExpressPeerServer.on("disconnect", function(id){ var idx = connected_users.indexOf(id);
+ExpressPeerServer.on("disconnect", function(id){ 
+    var idx = connected_users.indexOf(id);
     if(idx !== -1)
     {
         connected_users.splice(idx, 1);
     }
 
-    idx = waiting_peers.indexOf(id); if(idx !== -1)
+    idx = waiting_peers.indexOf(id); 
+    if(idx !== -1)
     {
         waiting_peers.splice(idx, 1);
     }
+    console.log("Disconnected from peer server: " + idx);
 });
 
 //getting a random chat partner
